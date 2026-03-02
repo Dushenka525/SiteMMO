@@ -1,0 +1,20 @@
+{% extends 'default.html' %}
+
+{% block content %}
+<h1>Комментарии к моим постам</h1>
+{% if comments %}
+    <ul>
+    {% for comment in comments %}
+        <li>
+            <p><strong>Пост:</strong> <a href="{% url 'post_detail' comment.post.pk %}">{{ comment.post.heading }}</a></p>
+            <p><strong>Автор комментария:</strong> {{ comment.author.user.username }}</p>
+            <p><strong>Дата:</strong> {{ comment.created_at|date:"d.m.Y H:i" }}</p>
+            <p>{{ comment.text }}</p>
+            <hr>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Пока нет комментариев к вашим постам.</p>
+{% endif %}
+{% endblock %}

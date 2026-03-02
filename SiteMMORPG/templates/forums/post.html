@@ -1,0 +1,34 @@
+{% extends 'default.html' %} 
+ 
+<!-- Название у нас будет products -->
+{% block title %}
+{% endblock title %}
+ 
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<h1>{{ post.heading }}</h1>
+<p>Категория: {{ post.category }}</p>
+<div>{{ post.content|safe }}</div>
+
+<hr>
+<h3>Комментарии</h3>
+{% for comment in comments %}
+    <div class="comment" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd;">
+        <p><strong>{{ comment.author.user.username }}</strong> ({{ comment.created_at|date:"d.m.Y H:i" }})</p>
+        <p>{{ comment.text }}</p>
+    </div>
+{% empty %}
+    <p>Пока нет комментариев. Будьте первым!</p>
+{% endfor %}
+
+{% if user.is_authenticated %}
+    <h4>Добавить комментарий</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+{% else %}
+    <p><a href="{% url 'login' %}?next={{ request.path }}">Войдите</a>, чтобы оставить комментарий.</p>
+{% endif %}
+{% endblock content %}

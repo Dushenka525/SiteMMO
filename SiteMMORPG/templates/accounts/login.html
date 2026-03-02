@@ -1,0 +1,17 @@
+{% extends 'accounts/base.html' %}
+{% block title %}
+
+<li class="nav-item">
+    <a class="nav-link" href="/accounts/register">Зарегистрироваться</a>
+</li>
+{% endblock title %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <button type = 'submit'> Войти </button>
+    </form>
+    <!-- <p>
+        Нет аккаунта? <a href = "{% url 'register'%}">Зарегистрироваться</a>
+    </p> -->
+{% endblock content %}

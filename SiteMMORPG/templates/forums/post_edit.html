@@ -1,0 +1,20 @@
+
+<!-- <!DOCTYPE html> -->
+{% extends 'default.html' %} 
+ 
+<!-- Название у нас будет products -->
+{% block title %}
+<!-- <html> -->
+<!-- <head> -->
+    <title>Создать пост</title>
+    {{ form.media }}  <!-- это подключит JS и CSS CKEditor -->
+<!-- </head> -->
+{% endblock title %}
+{% block content %}
+    <h1>Новый пост</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Сохранить</button>
+    </form>
+{% endblock content %}

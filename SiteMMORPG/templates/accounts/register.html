@@ -1,0 +1,16 @@
+{% extends "accounts/base.html" %}
+{% block title %}
+
+<li class="nav-item">
+    <a class="nav-link" href="/accounts/login">Войти в учетную запись</a>
+</li>
+{% endblock title %}
+
+{% block content %}
+<h2> Регистрация </h2>
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Продолжить">
+</form>
+{% endblock %}

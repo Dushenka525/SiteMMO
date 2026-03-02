@@ -1,0 +1,44 @@
+# Виртуальное окружение
+venv/
+env/
+ENV/
+.env
+
+# Файлы базы данных
+*.sqlite3
+*.db
+
+# Кэш Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Медиа и статические файлы (загруженные пользователями)
+media/
+staticfiles/
+
+# Файлы IDE (Visual Studio, VS Code)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Логи
+*.log
+
+# Файлы с секретами (если используете .env)
+.env
+.env.local
+
+# Папка с миграциями (если не хотите коммитить их, но обычно миграции коммитят)
+# forums/migrations/
+# accounts/migrations/
+
+# Другие временные файлы
+*.bak
+*.swp
+*.swo

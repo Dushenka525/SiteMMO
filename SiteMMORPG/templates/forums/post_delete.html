@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удаления поста</title>
+    {{ form.media }}  <!-- это подключит JS и CSS CKEditor -->
+</head>
+<body>
+<h1>Пост</h1>
+    {{ post.heading }}
+    {{ post.category }}
+    {{ post.content|safe }}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Удалить</button>
+    </form>
+</body>
+</html>

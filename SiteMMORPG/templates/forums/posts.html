@@ -1,0 +1,64 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'default.html' %} 
+ 
+<!-- Название у нас будет products -->
+{% block title %}
+{{ posts.media }}  <!-- это подключит JS и CSS CKEditor -->
+
+{% endblock title %}
+ 
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<h1>Все посты</h1>
+<form method="get">
+        {{ filterset.form.as_p }}
+    <button type="submit">Поиск</button>
+</form>
+{% if user.is_authenticated and filterset.data.category %}
+    {% with category_id=filterset.data.category %}
+        {% if category_id %}
+            <form method="post" action="{% url 'toggle_subscription' %}">
+                {% csrf_token %}
+                <input type="hidden" name="category_id" value="{{ category_id }}">
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                {% if category_id|add:0 in subscribed_category_ids %}
+                    <button type="submit" class="btn btn-warning">Отписаться</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary">Подписаться</button>
+                {% endif %}
+            </form>
+        {% endif %}
+    {% endwith %}
+{% endif %}
+{% for post in posts %}
+    <!-- <hr>
+    {{ post.heading }}
+    {{ post.category }}
+    {{ post.content|safe }} -->
+    <hr>
+    <h2><a href="{% url 'post_detail' post.pk %}">{{ post.heading }}</a></h2>
+    <p>Категория: {{ post.category }}</p>
+    <div>{{ post.content|safe|truncatewords_html:30 }}</div>
+    <a href="{% url 'post_detail' post.pk %}">Читать далее...</a>
+{% endfor %}
+   {# Информация о предыдущих страницах #}
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {# Информация о текущей странице #}
+   {{ page_obj.number }}
+
+   {# Информация о следующих страницах #}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+{% endblock content %}
